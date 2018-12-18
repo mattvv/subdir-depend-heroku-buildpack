@@ -1,0 +1,56 @@
+#!/usr/bin/env bash
+# bin/compile <build-dir> <cache-dir> <env-dir>
+
+BUILD_DIR=${1:-}
+CACHE_DIR=${2:-}
+ENV_DIR=${3:-}
+
+if [ -f $ENV_DIR/PROJECT_PATH ]; then
+	PROJECT_PATH=`cat $ENV_DIR/PROJECT_PATH`
+	echo $PROJECT_PATH
+	if [ -d $BUILD_DIR/$PROJECT_PATH ]; then
+		echo "-----> Subdir buildpack in $PROJECT_PATH"
+		echo "       creating cache: $CACHE_DIR"
+		mkdir -p $CACHE_DIR
+		TMP_DIR=`mktemp -d $CACHE_DIR/subdirXXXXX`
+		echo "       created tmp dir: $TMP_DIR"
+
+		echo "       copying required files from MANIFEST_GLOBAL"
+		for file in $(<$BUILD_DIR/$PROJECT_PATH/MANIFEST_GLOBAL)
+		do
+			if [ -a $BUILD_DIR/$file ]; then
+				cp -R "$BUILD_DIR/$file" $TMP_DIR/$file
+			else
+				echo "File or directory not found: $BUILD_DIR/$file"
+				exit 1
+			fi
+		done
+
+		echo "       moving files to root from MANIFEST_MV_TO_ROOT"
+		for file in $(<$BUILD_DIR/$PROJECT_PATH/MANIFEST_MV_TO_ROOT)
+		do
+			if [ -a $TMP_DIR/$file ]; then
+				mv "$TMP_DIR/$file" $TMP_DIR/$(basename $file)
+			else
+				echo "File or directory not found: $TMP_DIR/$file"
+				exit 1
+			fi
+		done		
+
+	 	echo "       cleaning build dir $BUILD_DIR"
+		rm -rf $BUILD_DIR
+		echo "       recreating $BUILD_DIR"
+		mkdir -p $BUILD_DIR
+		echo "       copying preserved work dir from cache $TMP_DIR to build dir $BUILD_DIR"
+		cp -R $TMP_DIR/. $BUILD_DIR/
+		echo "       cleaning tmp dir $TMP_DIR"
+		rm -rf $TMP_DIR
+
+		exit 0
+	fi
+fi
+
+echo "PROJECT_PATH is undefined"
+exit 1
+
+
