@@ -1,4 +1,4 @@
-# subdir_depend_heroku_buildpack
+# subdir-depend-heroku-buildpack
 Configure Heroku project by file listing allowing use of subfolders etc
 
 This is based on https://github.com/timanovsky/subdir-heroku-buildpack
