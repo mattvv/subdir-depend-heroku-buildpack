@@ -87,5 +87,5 @@ A standard Procfile for gunicorn will look like:
 
 Since your app is being run from a sub directory you need to tell gunicorn to change to this sub directory first. Your procfile should look like
 
-	web: gunicorn --chdir ./project1 sankey_app:server
+	web: gunicorn --chdir ./project1 app:server
 
