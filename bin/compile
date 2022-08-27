@@ -38,6 +38,9 @@ if [ -f $ENV_DIR/PROJECT_PATH ]; then
 		cp -R $TMP_DIR/. $BUILD_DIR/
 		echo "       cleaning tmp dir $TMP_DIR"
 		rm -rf $TMP_DIR
+		
+		echo "Your directory contains"
+		ls $BUILD_DIR/
 
 		exit 0
 	fi
