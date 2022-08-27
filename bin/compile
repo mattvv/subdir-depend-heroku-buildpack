@@ -16,7 +16,7 @@ if [ -f $ENV_DIR/PROJECT_PATH ]; then
 		echo "       created tmp dir: $TMP_DIR"
 
 		echo "       moving files to root from PROJECT_PATH"
-		cp -R "$BUILD_DIR/$PROJECT_PATH/*" $TMP_DIR
+		cp -R $BUILD_DIR/$PROJECT_PATH/* $TMP_DIR
 		rm -rf $TMP_DIR/MANIFEST_GLOBAL
 		
 		echo "       copying required files from MANIFEST_GLOBAL"
