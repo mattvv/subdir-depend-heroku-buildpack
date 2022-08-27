@@ -27,7 +27,7 @@ if [ -f $ENV_DIR/PROJECT_PATH ]; then
 		done		
 		
 		echo "       copying required files from MANIFEST_GLOBAL"
-		for file in $(<$BUILD_DIR/$PROJECT_PATH/MANIFEST_GLOBAL)
+		for file in $(<$TMP_DIR/MANIFEST_GLOBAL)
 		do
 			if [ -a $BUILD_DIR/$file ]; then
 				cp -R "$BUILD_DIR/$file" $TMP_DIR/$file
