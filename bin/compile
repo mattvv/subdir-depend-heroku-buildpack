@@ -19,7 +19,7 @@ if [ -f $ENV_DIR/PROJECT_PATH ]; then
 		for file in $(<$BUILD_DIR/$PROJECT_PATH/MANIFEST_MV_TO_ROOT)
 		do
 			if [ -a $BUILD_DIR/$file ]; then
-				mv "$BUILD_DIR/$file" $TMP_DIR
+				cp -R "$BUILD_DIR/$file" $TMP_DIR
 			else
 				echo "File or directory not found: $BUILD_DIR/$file"
 				exit 1
@@ -27,7 +27,7 @@ if [ -f $ENV_DIR/PROJECT_PATH ]; then
 		done		
 		
 		echo "       copying required files from MANIFEST_GLOBAL"
-		for file in $(<$TMP_DIR/MANIFEST_GLOBAL)
+		for file in $(<$BUILD_DIR/$PROJECT_PATH/MANIFEST_GLOBAL)
 		do
 			if [ -a $BUILD_DIR/$file ]; then
 				cp -R "$BUILD_DIR/$file" $TMP_DIR/$file
