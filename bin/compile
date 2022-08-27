@@ -18,10 +18,10 @@ if [ -f $ENV_DIR/PROJECT_PATH ]; then
 		echo "       moving files to root from MANIFEST_MV_TO_ROOT"
 		for file in $(<$BUILD_DIR/$PROJECT_PATH/MANIFEST_MV_TO_ROOT)
 		do
-			if [ -a $TMP_DIR/$file ]; then
-				mv "$BUILD_DIR/$file" $TMP_DIR/$(basename $file)
+			if [ -a $BUILD_DIR/$file ]; then
+				mv "$BUILD_DIR/$file" $TMP_DIR/$file
 			else
-				echo "File or directory not found: $TMP_DIR/$file"
+				echo "File or directory not found: $BUILD_DIR/$file"
 				exit 1
 			fi
 		done		
