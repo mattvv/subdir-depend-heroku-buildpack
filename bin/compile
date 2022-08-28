@@ -19,6 +19,9 @@ if [ -f $ENV_DIR/PROJECT_PATH ]; then
 		cp -R $BUILD_DIR/$PROJECT_PATH/* $TMP_DIR
 		rm -rf $TMP_DIR/MANIFEST_GLOBAL
 		
+		echo "       copying required heroku files"
+		cp -R $BUILD_DIR/.yarn $TMP_DIR/.yarn
+		
 		echo "       copying required files from MANIFEST_GLOBAL"
 		for file in $(<$BUILD_DIR/$PROJECT_PATH/MANIFEST_GLOBAL)
 		do
